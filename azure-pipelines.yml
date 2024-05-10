@@ -89,7 +89,7 @@ stages:
         vmImage: 'ubuntu-20.04'
       environment: dev
       variables:
-      - group: Release
+      - group: 'Release'
       strategy:
         runOnce:
           deploy:
@@ -99,7 +99,8 @@ stages:
             - task: AzureWebApp@1
               displayName: 'Azure App Service Deploy: website'
               inputs:
-                azureSubscription: $(ConnexionName)
+                appType: 'webApp'
+                azureSubscription: '$(ConnexionName)'
                 appName: '$(WebAppNameDev)'
                 package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
 
@@ -123,6 +124,7 @@ stages:
             - task: AzureWebApp@1
               displayName: 'Azure App Service Deploy: website'
               inputs:
-                azureSubscription: $(ConnexionName)
+                appType: 'webApp'
+                azureSubscription: '$(ConnexionName)'
                 appName: '$(WebAppNameTest)'
                 package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'                
