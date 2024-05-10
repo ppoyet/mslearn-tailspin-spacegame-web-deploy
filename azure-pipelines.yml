@@ -2,9 +2,14 @@ trigger:
   - '*'
   
 variables:
-    buildConfiguration: 'Release'
-    releaseBranchName: 'release'
-  
+#  - group: 'Release'
+  - name: 'buildConfiguration'
+    value: 'Release'
+  - name: 'releaseBranchName'
+    value: 'release'
+  - name: 'ConnexionNameTest'
+    value: 'GestionnaireRessourcesTailspinJeuEspace'
+
 schedules:
   - cron: '0 19 * * *'
     displayName: 'Deploy every day at 15h00 heure local (canadacentral -4)'
@@ -100,7 +105,7 @@ stages:
               displayName: 'Azure App Service Deploy: website'
               inputs:
                 appType: 'webApp'
-                azureSubscription: '$(ConnexionName)'
+                azureSubscription: '${{ ConnexionNameTest }}'
                 appName: '$(WebAppNameDev)'
                 package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
 
@@ -125,6 +130,6 @@ stages:
               displayName: 'Azure App Service Deploy: website'
               inputs:
                 appType: 'webApp'
-                azureSubscription: '$(ConnexionName)'
+                azureSubscription: '${{ ConnexionNameTest }}'
                 appName: '$(WebAppNameTest)'
                 package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'                
